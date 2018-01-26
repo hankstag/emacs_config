@@ -30,9 +30,11 @@
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
 (require 'smartparens-config)
-;;(add-hook 'emacs-lisp-mode-hook 'smartparens-mode)
 (smartparens-global-mode t)
-;;(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+
+;; dashboard
+(require 'dashboard)
+(dashboard-setup-startup-hook)
 
 ;; load theme
 (load-theme 'dracula t)
