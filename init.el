@@ -15,10 +15,11 @@
 (global-company-mode t)
 (global-hl-line-mode t)
 (set-frame-font "consolas 12" nil t)
-(setq visible-bell 1)
-;;(require 'smex)
-;;(smex-initialize)
-;;(global-set-key (kbd "M-x") 'smex)
+(fset 'yes-or-no-p 'y-or-n-p)
+(setq ring-bell-function 'ignore)
+(electric-indent-mode -1)
+(require 'smooth-scrolling)
+(smooth-scrolling-mode)
 
 ;;use swipe for search
 (ivy-mode 1)
@@ -33,7 +34,7 @@
 (smartparens-global-mode t)
 ;;(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
 
-
+;; load theme
 (load-theme 'dracula t)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
