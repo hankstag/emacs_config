@@ -28,6 +28,13 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+;; set up flycheck
+(require 'flycheck)
+(add-hook 'c++-mode-hook
+          (lambda () (setq flycheck-clang-language-standard "c++11")))
+(add-hook 'c-mode-hook 'flycheck-mode)
+(add-hook 'c++-mode-hook 'flycheck-mode)
+
 ;; counsel projectile mode
 (counsel-projectile-mode 1)
 
@@ -42,7 +49,35 @@
 (define-key c-mode-base-map (kbd "C-.") (function rtags-find-symbol))
 (define-key c-mode-base-map (kbd "C-,") (function rtags-find-references))
 
+;; irony setup
+(require 'irony)
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+(add-hook 'objc-mode-hook 'irony-mode)
+(defun my-irony-mode-hook ()
+  (define-key irony-mode-map [remap completion-at-point]
+    'irony-completion-at-point-async)
+  (define-key irony-mode-map [remap complete-symbol]
+    'irony-completion-at-point-async))
+(add-hook 'irony-mode-hook 'my-irony-mode-hook)
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+(require 'company-irony)
+(add-hook 'irony-mode-hook 'company-irony-setup-begin-commands)
+(setq company-backends (delete 'company-semantic company-backends))
+(require 'company-irony-c-headers)
+(eval-after-load 'company
+  '(add-to-list
+    'company-backends '(company-irony-c-headers company-irony)))
+(setq company-idle-delay              t
+      company-minimum-prefix-length   2
+      company-show-numbers            t
+      company-tooltip-limit           20
+      company-dabbrev-downcase        nil)
+(require 'flycheck-irony)
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
+;; smart paranthesis
 (require 'smartparens-config)
 (smartparens-global-mode t)
 
@@ -62,7 +97,7 @@
     ("ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" default)))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell ivy-rtags counsel-projectile smartparens counsel swiper dracula-theme company))))
+    (company-irony-c-headers flycheck-irony irony company-irony flycheck exec-path-from-shell ivy-rtags counsel-projectile smartparens counsel swiper dracula-theme company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
