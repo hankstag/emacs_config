@@ -1,8 +1,3 @@
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 
@@ -29,15 +24,34 @@
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 
+;; set up PATH variable
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;; counsel projectile mode
+(counsel-projectile-mode 1)
+
+;; ivy rtags
+(require 'rtags)
+(setq rtags-autostart-diagnostics t)
+(rtags-enable-standard-keybindings)
+(setq rtags-display-result-backend 'ivy)
+(define-key c-mode-base-map (kbd "M-.") (function rtags-find-symbol-at-point))
+(define-key c-mode-base-map (kbd "M-,") (function rtags-find-references-at-point))
+(define-key c-mode-base-map (kbd "M-;") (function rtags-find-file))
+(define-key c-mode-base-map (kbd "C-.") (function rtags-find-symbol))
+(define-key c-mode-base-map (kbd "C-,") (function rtags-find-references))
+
+
 (require 'smartparens-config)
 (smartparens-global-mode t)
 
-;; dashboard
-(require 'dashboard)
-(dashboard-setup-startup-hook)
-
 ;; load theme
 (load-theme 'dracula t)
+
+
+
+;; others
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -46,7 +60,9 @@
  '(custom-safe-themes
    (quote
     ("ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" default)))
- '(package-selected-packages (quote (smartparens counsel swiper dracula-theme company))))
+ '(package-selected-packages
+   (quote
+    (exec-path-from-shell ivy-rtags counsel-projectile smartparens counsel swiper dracula-theme company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
