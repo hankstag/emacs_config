@@ -1,5 +1,6 @@
 (package-initialize)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
 
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -15,6 +16,9 @@
 (electric-indent-mode -1)
 (require 'smooth-scrolling)
 (smooth-scrolling-mode)
+
+(require 'powerline)
+(powerline-default-theme)
 
 ;;use swipe for search
 (ivy-mode 1)
@@ -76,6 +80,7 @@
 (require 'flycheck-irony)
 (eval-after-load 'flycheck
   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
+(setq irony-additional-clang-options '("-std=c++11"))
 
 ;; smart paranthesis
 (require 'smartparens-config)
