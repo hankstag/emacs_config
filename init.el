@@ -28,10 +28,10 @@
 (global-set-key [(mouse-5)] '(lambda () (interactive) (smooth-scroll 1)))
 (global-set-key [(mouse-4)] '(lambda () (interactive) (smooth-scroll -1)))
 
-;;(require 'powerline)
-;;(powerline-default-theme)
-(require 'spaceline-config)
-(spaceline-emacs-theme)
+(require 'powerline)
+(powerline-default-theme)
+;;(require 'spaceline-config)
+;;(spaceline-emacs-theme)
 
 ;;use swipe for search
 (ivy-mode 1)
@@ -115,7 +115,7 @@
     ("ff7625ad8aa2615eae96d6b4469fcc7d3d20b2e1ebc63b761a349bebbb9d23cb" default)))
  '(package-selected-packages
    (quote
-    (spaceline company-irony-c-headers flycheck-irony irony company-irony flycheck exec-path-from-shell ivy-rtags counsel-projectile smartparens counsel swiper dracula-theme company))))
+    (company-irony-c-headers flycheck-irony irony company-irony flycheck exec-path-from-shell ivy-rtags counsel-projectile smartparens counsel swiper dracula-theme company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
